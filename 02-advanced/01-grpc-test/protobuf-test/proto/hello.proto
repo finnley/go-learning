@@ -1,0 +1,68 @@
+syntax = "proto3";
+// 引入其他proto文件
+import "base.proto";
+import "google/protobuf/empty.proto";
+// timestamp
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./;proto";
+
+service Greeter {
+  rpc SayHello(HelloRequest) returns(HelloReply);
+  //  rpc Ping(Empty) returns (Pong);
+  // 使用google现成的Empty
+  rpc Ping(google.protobuf.Empty) returns (Pong);
+}
+
+message HelloRequest {
+  string url = 1;
+  // repeated Result data = 2;
+  // 如果Result并不会单独用到，只会使用一次，只会在HelloReply里面用到，所以可以嵌入进来，不设置公用:
+  message Result {
+    string name = 1;
+    string url = 2;
+  }
+  // 枚举类型
+  Gender g = 3;
+  // map 类型
+  map<string, string> map = 4;
+  // timestamp
+  google.protobuf.Timestamp addTime = 5;
+}
+
+// 枚举类型
+enum Gender {
+  MALE = 0;
+  FEMALE = 1;
+}
+
+// 嵌套message对象
+message Result {
+  string name = 1;
+  string url = 2;
+}
+
+message HelloReply {
+  string message = 1;
+  // repeated Result data = 2;
+  // 如果Result并不会单独用到，只会使用一次，只会在HelloReply里面用到，所以可以嵌入进来，不设置公用:
+  message Result {
+    string name = 1;
+    string url = 2;
+  }
+  // 枚举类型
+  Gender g = 3;
+  // map 类型
+  map<string, string> map = 4;
+  // timestamp
+  google.protobuf.Timestamp addTime = 5;
+}
+
+// 公用message迁移到base.proto
+//message Empty {
+//  // 什么都没有
+//}
+//
+//message Pong {
+//  string id = 1;
+//}

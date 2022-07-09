@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option go_package = "./;proto";
+
+service Greeter {
+  rpc Ping(Empty) returns (Pong);
+}
+
+message HelloRequest {
+  string url = 1;
+  string name = 2;
+}
+
+message HelloReply {
+  string message = 1;
+}
+
+
+

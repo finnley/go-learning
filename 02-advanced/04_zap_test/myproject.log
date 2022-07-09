@@ -1,0 +1,1 @@
+{"level":"info","ts":1654789023.1557062,"caller":"04_zap_test/03_log_to_file.go:26","msg":"failed to fetch URL{url 15 0 https://notes.einscat.com <nil>} {attempt 11 3  <nil>} {backoff 8 1000000000  <nil>}"}

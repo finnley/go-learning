@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+// 格式 proto 是对应的包名
+// protobuf新版本需要添加下面这句，使用protoc3.14以及一下的版本可不添加
+//option go_package = "./;proto";
+// 指定生成目录: 01-helloworld/proto/hw/proto/pb
+//option go_package = "hw/proto/pb";
+option go_package = "../../../common/hw/proto/pb";
+
+message HelloRequest {
+  string name = 1; // 1表示编号，不是值
+  int32 age = 2;
+  repeated string courses = 3;
+}
+
