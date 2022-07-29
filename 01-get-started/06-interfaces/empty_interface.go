@@ -64,7 +64,6 @@ func main() {
 	fmt.Println(i) // { 0 }
 	i = 10
 
-
 	// 2.参数传递
 	print(i)
 	i = "golang"
