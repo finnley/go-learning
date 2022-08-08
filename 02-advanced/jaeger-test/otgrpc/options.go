@@ -36,7 +36,7 @@ func IncludingSpans(inclusionFunc SpanInclusionFunc) Option {
 }
 
 // SpanDecoratorFunc provides an (optional) mechanism for otgrpc users to add
-// arbitrary tags/logs/etc to the opentracing.Span associated with client
+// arbitrary tags/redis_slow_log/etc to the opentracing.Span associated with client
 // and/or server RPCs.
 type SpanDecoratorFunc func(
 	span opentracing.Span,

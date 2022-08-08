@@ -21,3 +21,9 @@ go get github.com/go-redis/redis/v8
 ```shell
 go get github.com/gomodule/redigo/redis
 ```
+
+## 文件时间
+
+```shell
+go get -u github.com/djherbis/times
+```
