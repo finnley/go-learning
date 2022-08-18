@@ -2,11 +2,13 @@ package main
 
 import (
 	"fmt"
+	"io/fs"
 	"io/ioutil"
 	"os"
 	"path"
 	"path/filepath"
 	"regexp"
+	"sort"
 	"strings"
 	"sync"
 	"time"
@@ -39,12 +41,6 @@ func Execute() {
 		}
 	}
 }
-
-var rmExp = "^\\d{4}_(\\d{2}_){5}.*\\.slow_log.tar.gz$"
-var rmReg = regexp.MustCompile(rmExp)
-
-var zipExp = "^\\d{4}_(\\d{2}_){5}.*\\.log$"
-var zipReg = regexp.MustCompile(zipExp)
 
 var l sync.Mutex
 
@@ -313,22 +309,207 @@ func main2() {
 
 var redisSlowLogDir = "./redis_slow_log"
 
-func main() {
+func main33() {
 	//slowLogDir, err := ioutil.ReadDir(redisSlowLogDir)
 	//if err != nil {
 	//	fmt.Println(err)
-	//} else {
-	//	fmt.Println(slowLogDir)
 	//}
 	//for _, dir := range slowLogDir {
 	//	fmt.Println(dir.Name())
+	//	if dir.Name() == "test1" {
+	//		os.RemoveAll(filepath.Join(redisSlowLogDir, "test1"))
+	//	}
+	//	if reg.Match([]byte(dir.Name())) {
+	//
+	//	}
 	//}
 
-	slogLogFilePath := filepath.Join(redisSlowLogDir, "redis-1", redisSlowLogFilename)
+	//slogLogFilePath := filepath.Join(redisSlowLogDir, "redis-1", "/slow_1659932553.log")
+	//file, err := os.Stat(slogLogFilePath)
+	//if nil != err {
+	//	fmt.Println(err)
+	//} else {
+	//	fmt.Println(file.Name(), file.ModTime().Unix())
+	//}
+	//fmt.Println(getTimeFromSlowLogName(slogLogFilePath))
+	//
+}
+
+//func getTimeFromSlowLogName(path string) int {
+//	s := strings.Split(path, "/")
+//	last := s[len(s)-1]
+//
+//	ret := regexp.MustCompile("[0-9]+").FindAllString(last, -1)
+//	ctime, _ := strconv.Atoi(ret[0])
+//
+//	return ctime
+//}
+
+func main444() {
+	//slogLogFilePath := filepath.Join(redisSlowLogDir, "redis-1", "/slow_1659932553.log")
+	slogLogFilePath := filepath.Join(redisSlowLogDir, "redis-1", "/slow.log")
 	file, err := os.Stat(slogLogFilePath)
 	if nil != err {
 		fmt.Println(err)
 	} else {
 		fmt.Println(file.Name(), file.ModTime().Unix())
 	}
+	fileName := fmt.Sprintf("%s_slow.log", file.ModTime().Format("2006_01_02_15_04_05"))
+	dirPath := filepath.Join(redisSlowLogDir, "redis-1")
+	newPath := filepath.Join(dirPath, fileName)
+
+	os.Rename(slogLogFilePath, newPath)
+}
+
+// 2022_08_02_14_01_50_slow.log
+//var rmExp = "^\\d{4}_(\\d{2}_){5}slow.log$"
+//var rmExp = `^([\d]{4})_(([\d]{2}_){5})(slow.log)$`
+//var rmExp = `^([\d]{4})_([\d]{2})_([\d]{2})_([\d]{2})_([\d]{2})_([\d]{2})_(slow.log)$`
+var rmExp = `^([\d]{4}_[\d]{2}_[\d]{2}_[\d]{2}_[\d]{2}_[\d]{2})_slow.log$`
+var rmReg = regexp.MustCompile(rmExp)
+
+//var zipExp = "^\\d{4}_(\\d{2}_){5}.*\\.log$"
+//var zipExp = "^\\d{4}_(\\d{2}_){5}.*\\.log$"
+//var zipReg = regexp.MustCompile(zipExp)
+func main000() {
+	//str := `^\d{4}_(\d{2}_){5}.*\.log$`
+	//r := regexp.MustCompile(str)
+	//matchs := r.FindStringSubmatch("tao123shi5han567")
+	//for _, s := range matchs {
+	//	fmt.Println(s)
+	//}
+	//
+	//slowLogDir, _ := ioutil.ReadDir(redisSlowLogDir)
+	//for _, dir := range slowLogDir {
+	//	fmt.Println(dir.Name())
+	//
+	//
+	//}
+
+	slogLogFilePath := filepath.Join(redisSlowLogDir, "redis-1", "2022_08_02_14_01_50_slow.log")
+	fmt.Println(filepath.Dir(filepath.Join(redisSlowLogDir, "redis-1", "2022_08_02_14_01_50_slow.log")))
+
+	file, _ := os.Stat(slogLogFilePath)
+	params := rmReg.FindStringSubmatch(file.Name())
+	fmt.Println(params)
+
+	//unix_time := the_time.Unix()
+	//fmt.Println(unix_time)
+	//fmt.Println(params[1])
+	timeformatdate2, _ := time.Parse("2006_01_02_15_04_05", params[len(params)-1])
+	fmt.Println(timeformatdate2.Unix())
+	fmt.Println(params[len(params)-1])
+
+	//t := make([]int, 0)
+	//for _, s := range params {
+	//	fmt.Println(s)
+	//	v, _ := strconv.Atoi(s)
+	//	t = append(t, v)
+	//}
+	//the_time := time.Date(t[0], time.Month(t[1]), t[2], t[3], t[4], t[5], t[6], time.Local)
+	//unix_time := the_time.Unix()
+	//fmt.Println(unix_time)
+
+	//rmMatched := rmReg.Match([]byte(file.Name()))
+
+	//flysnowRegexp := regexp.MustCompile(`^http://www.flysnow.org/([\d]{4})/([\d]{2})/([\d]{2})/([\w-]+).html$`)
+	//params2 := flysnowRegexp.FindStringSubmatch("http://www.flysnow.org/2018/01/20/golang-goquery-examples-selector.html")
+	//for _, param := range params2 {
+	//	fmt.Println(param)
+	//}
+}
+
+const (
+	date        = "2006-01-02"
+	shortdate   = "06-01-02"
+	times       = "15:04:02"
+	shorttime   = "15:04"
+	datetime    = "2006-01-02 15:04:02"
+	newdatetime = "2006/01/02 15~04~02"
+	newtime     = "15~04~02"
+	ss          = "2006_01_02_15_04_05"
+)
+
+func main88() {
+	thisdate := "2022_08_09_14_55_06"
+	timeformatdate, _ := time.Parse(datetime, thisdate)
+	timeformatdate2, _ := time.Parse(ss, thisdate)
+	fmt.Println("aa: ", timeformatdate.Unix())
+	fmt.Println("bb: ", timeformatdate2.Unix())
+	convdate := timeformatdate.Format(date)
+	convshortdate := timeformatdate.Format(shortdate)
+	convtime := timeformatdate.Format(times)
+	convshorttime := timeformatdate.Format(shorttime)
+	convnewdatetime := timeformatdate.Format(newdatetime)
+	convnewtime := timeformatdate.Format(newtime)
+	fmt.Println(convdate)
+	fmt.Println(convshortdate)
+	fmt.Println(convtime)
+	fmt.Println(convshorttime)
+	fmt.Println(convnewdatetime)
+	fmt.Println(convnewtime)
+}
+
+const (
+	TimeFormat     = "2006_01_02_15_04_05"
+	logFileNameRep = `^([\d]{4}_[\d]{2}_[\d]{2}_[\d]{2}_[\d]{2}_[\d]{2})_slow.log$`
+)
+
+var reg = regexp.MustCompile(logFileNameRep)
+var mu sync.Mutex
+
+func main() {
+	getHistoryLogsFileFromInLogDir()
+}
+
+func getHistoryLogsFileFromInLogDir() error {
+	redisSlowLogDir := filepath.Dir("./redis_slow_log/redis-1/1.log")
+	slowLogDir, err := ioutil.ReadDir(redisSlowLogDir)
+	if err != nil {
+		return err
+	}
+
+	logs := make([]fs.FileInfo, 0)
+	//for _, file := range slowLogDir {
+	//	if strings.Contains(file.Name(), "_slow.log") {
+	//		logs = append(logs, file)
+	//	}
+	//	fmt.Println(file)
+	//}
+	//sort.Sort(BySlowLogTimestamp(logs))
+
+	for _, file := range slowLogDir {
+		if isOk := reg.MatchString(file.Name()); isOk {
+			logs = append(logs, file)
+		}
+
+		//fmt.Println(file.Name())
+	}
+	sort.Sort(BySlowLogTimestamp(logs))
+
+	for _, file := range logs {
+		fmt.Println(file.Name())
+	}
+
+	return nil
+}
+
+// 对慢日志文件按照时间排序
+type BySlowLogTimestamp []fs.FileInfo
+
+func (fi BySlowLogTimestamp) Len() int {
+	return len(fi)
+}
+
+func (fi BySlowLogTimestamp) Swap(i, j int) {
+	fi[i], fi[j] = fi[j], fi[i]
+}
+
+func (fi BySlowLogTimestamp) Less(i, j int) bool {
+	first, second := reg.FindStringSubmatch(fi[i].Name()), reg.FindStringSubmatch(fi[j].Name())
+
+	timeFormatFirst, _ := time.Parse(TimeFormat, first[len(first)-1])
+	timeFormatSecond, _ := time.Parse(TimeFormat, second[len(second)-1])
+
+	return timeFormatFirst.Unix() < timeFormatSecond.Unix()
 }

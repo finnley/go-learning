@@ -50,12 +50,12 @@ func main() {
 	//msg = make(chan int, 1)
 	//msg <- 1
 	//wg.Add(1)
-	////go consumer(msg) // 1
-	//go func(queue chan int) {
-	//	defer wg.Done()
-	//	data := <-queue
-	//	fmt.Println(data)
-	//}(msg)
+	//go consumer(msg) // 1
+	////go func(queue chan int) {
+	////	defer wg.Done()
+	////	data := <-queue
+	////	fmt.Println(data)
+	////}(msg)
 	////这里防止主goroutine退出，也需要进行阻塞
 	//wg.Wait()
 
@@ -65,12 +65,12 @@ func main() {
 	//msg <- 1 //这一步是可以运行成功的，但是这一步后并没有去启动goroutine消费，所以消费者并没有来消费
 	//msg <- 2 //因为上一步消费者并没有来消费，再往里面放值
 	//wg.Add(1)
-	////go consumer(msg) // 1
-	//go func(queue chan int) {
-	//	defer wg.Done()
-	//	data := <-queue
-	//	fmt.Println(data)
-	//}(msg)
+	//go consumer(msg) // 1
+	////go func(queue chan int) {
+	////	defer wg.Done()
+	////	data := <-queue
+	////	fmt.Println(data)
+	////}(msg)
 	//wg.Wait()
 	////上面的还是会报错 fatal error: all goroutines are asleep - deadlock!
 	////在放进去是成功的，但是并没有启动goroutine,所以消费者还没有来得及消费，所以再往里面放值的时候是还要出错的，所以可以在启动之后再放 ，如下：
@@ -79,12 +79,12 @@ func main() {
 	//msg = make(chan int, 1)
 	//msg <- 1
 	//wg.Add(1)
-	////go consumer(msg) // 1
-	//go func(queue chan int) {
-	//	defer wg.Done()
-	//	data := <-queue
-	//	fmt.Println(data)
-	//}(msg)
+	//go consumer(msg) // 1
+	////go func(queue chan int) {
+	////	defer wg.Done()
+	////	data := <-queue
+	////	fmt.Println(data)
+	////}(msg)
 	//msg <- 2 // 在启动goroutine之后再来往里面放值
 	//wg.Wait()
 
@@ -143,7 +143,7 @@ func main() {
 	//wg.Wait()
 
 	//// 2.已经关闭的 channel 还可以继续消费，直到数据取完
-	//// 所以结论是已经关闭的channel能够继续取数据，知道数据取完为止，但不能继续发数据
+	//// 所以结论是已经关闭的channel能够继续取数据，直到数据取完为止，但不能继续发数据
 	//var msg chan int
 	//msg = make(chan int, 1)
 	//msg <- 1
