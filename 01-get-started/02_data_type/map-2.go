@@ -8,9 +8,9 @@ import (
 )
 
 func main() {
-	mapLearn()
+	//mapLearn()
 
-	//goplLearn()
+	goplLearn()
 }
 
 func goplLearn() {

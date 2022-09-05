@@ -1,4 +1,4 @@
-package demo_sync
+package safe_map
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 )
 
 func TestDeferRLock(t *testing.T) {
-	sm := SafeMap[string, string]{
+	sm := list.SafeMap[string, string]{
 		values: make(map[string]string, 4),
 	}
 	sm.LoadOrStoreV1("a", "b")
@@ -15,7 +15,7 @@ func TestDeferRLock(t *testing.T) {
 }
 
 func TestDeferOverride(t *testing.T) {
-	sm := SafeMap[string, string]{
+	sm := list.SafeMap[string, string]{
 		values: make(map[string]string, 4),
 	}
 	go func() {

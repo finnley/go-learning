@@ -31,7 +31,7 @@ func GetEnvInfo(env string) bool {
 
 func main1() {
 	v := viper.New()
-	v.SetConfigFile("02-advanced/05_viper_test/ch02/config-debug.yaml")
+	v.SetConfigFile("02-advanced/05-viper-test/ch02/config-debug.yaml")
 	if err := v.ReadInConfig(); err != nil {
 		panic(err)
 	}
@@ -52,11 +52,11 @@ func main2() {
 	fmt.Println(GetEnvInfo("CAT_DEBUG"))    // false
 	debug := GetEnvInfo("MXSHOP_DEBUG")
 	configFilePrefix := "config"
-	configFileName := fmt.Sprintf("02-advanced/05_viper_test/ch02/%s-pro.yaml", configFilePrefix)
+	configFileName := fmt.Sprintf("02-advanced/05-viper-test/ch02/%s-pro.yaml", configFilePrefix)
 	if debug {
-		configFileName = fmt.Sprintf("02-advanced/05_viper_test/ch02/%s-debug.yaml", configFilePrefix)
+		configFileName = fmt.Sprintf("02-advanced/05-viper-test/ch02/%s-debug.yaml", configFilePrefix)
 	}
-	fmt.Println(configFileName) // 02-advanced/05_viper_test/ch02/config-debug.yaml
+	fmt.Println(configFileName) // 02-advanced/05-viper-test/ch02/config-debug.yaml
 	v := viper.New()
 	v.SetConfigFile(configFileName)
 	if err := v.ReadInConfig(); err != nil {
@@ -77,11 +77,11 @@ func main() {
 	fmt.Println(GetEnvInfo("CAT_DEBUG"))    // false
 	debug := GetEnvInfo("MXSHOP_DEBUG")
 	configFilePrefix := "config"
-	configFileName := fmt.Sprintf("02-advanced/05_viper_test/ch02/%s-pro.yaml", configFilePrefix)
+	configFileName := fmt.Sprintf("02-advanced/05-viper-test/ch02/%s-pro.yaml", configFilePrefix)
 	if debug {
-		configFileName = fmt.Sprintf("02-advanced/05_viper_test/ch02/%s-debug.yaml", configFilePrefix)
+		configFileName = fmt.Sprintf("02-advanced/05-viper-test/ch02/%s-debug.yaml", configFilePrefix)
 	}
-	fmt.Println(configFileName) // 02-advanced/05_viper_test/ch02/config-debug.yaml
+	fmt.Println(configFileName) // 02-advanced/05-viper-test/ch02/config-debug.yaml
 	v := viper.New()
 	v.SetConfigFile(configFileName)
 	if err := v.ReadInConfig(); err != nil {
@@ -94,7 +94,7 @@ func main() {
 	fmt.Println(serverConfig)         //{use-web2 {127.0.0.1 3306}}
 	fmt.Printf("%v\n", v.Get("name")) // use-web2
 
-	//05_viper_test 还可以动态监控变化
+	//05-viper-test 还可以动态监控变化
 	//运行文件 修改配置文件，自动输出
 	v.WatchConfig()
 	// 如何知道变化的值 这种不会堵塞住，所以为了防止退出需要设置time.Sleep(time.Second * 300)

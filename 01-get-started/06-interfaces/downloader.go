@@ -56,6 +56,7 @@ func main3() {
 // ?: Something that can Get
 type retriever interface {
 	Get(url string) string
+	RefreshData(f func(string))
 }
 
 func getRetriever() retriever {
@@ -66,4 +67,8 @@ func getRetriever() retriever {
 func main() {
 	var retriever = getRetriever()
 	fmt.Println(retriever.Get("https://www.imooc.com"))
+	f := func(s string) {
+		fmt.Println("hello", s)
+	}
+	retriever.RefreshData(f)
 }

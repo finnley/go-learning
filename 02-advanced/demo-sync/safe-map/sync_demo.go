@@ -1,4 +1,4 @@
-package demo_sync
+package safe_map
 
 import "sync"
 

@@ -16,13 +16,13 @@ func main() {
 	v := viper.New()
 	// 文件路径如何设置?
 	// v.SetConfigFile("config-debug.yaml") // 这种方式需要切换到main文件所在目录
-	v.SetConfigFile("02-advanced/05_viper_test/ch01/config-debug.yaml") // 这种方式相对项目根目录，可以直接运行该文件
+	v.SetConfigFile("02-advanced/05-viper-test/ch01/config-debug.yaml") // 这种方式相对项目根目录，可以直接运行该文件
 	// 读取文件，有可能出错，需要判断
 	if err := v.ReadInConfig(); err != nil {
 		panic(err)
 	}
 	name := v.Get("name")
-	fmt.Println(name)
+	fmt.Println("name:", name)
 
 	// 映射成 struct
 	serverConfig := ServerConfig{}
@@ -30,6 +30,6 @@ func main() {
 		panic(err)
 	}
 	fmt.Println(serverConfig) // {use-web 8021}
-	fmt.Printf("%s\n", v.Get("name"))
+	fmt.Printf("name: %s\n", v.Get("name"))
 
 }
